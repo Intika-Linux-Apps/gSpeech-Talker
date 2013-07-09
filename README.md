@@ -1,4 +1,4 @@
 gSpeech
 =======
 
-gSpeech is a GUI for SVox Pico TTS
+gSpeech: a GUI for SVox Pico TTS
