@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-08 10:26+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: DUPOUY PAUL <pauldupouy@wanadoo.fr>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: it-IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: gSpeech.py:56
+msgid "Developers :"
+msgstr "Desarrolladores :"
+
+#: gSpeech.py:61
+msgid "SVOX Pico simple GUI"
+msgstr "Interfaz sencilla para SVOX Pico"
+
+#: gSpeech.py:109,233
+msgid "Read selected text"
+msgstr "Lee el texto seleccionado"
+
+#: gSpeech.py:116,235
+msgid "Read clipboard content"
+msgstr "Leer el contenido del portapapeles"
+
+#: gSpeech.py:188
+msgid "I'm reading the text. One moment please."
+msgstr "Estoy leyendo el texto. Un momento por favor."
+
+#: gSpeech.py:190
+msgid "Multimedia window"
+msgstr "ventana de Multimedia"
+
+#: gSpeech.py:239
+msgid "A little script to read SVOX Pico texts selected with the mouse."
+msgstr "Un pequeño script para leer con SVOX Pico  los textos seleccionados con el ratón."
+
+#: gSpeech.py:259
+msgid "Save the speech"
+msgstr "Salvar la lectura"
+
+#: gSpeech.py:267
+msgid "Wave file (*.wav)"
+msgstr "Archivo wave (*.wav)"
