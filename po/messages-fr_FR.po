@@ -32,7 +32,7 @@ msgstr "Lire le texte sélectionné"
 
 #: gSpeech.py:116,235
 msgid "Read clipboard content"
-msgstr "Lire le contenue du presse-papiers"
+msgstr "Lire le contenu du presse-papiers"
 
 #: gSpeech.py:188
 msgid "I'm reading the text. One moment please."
