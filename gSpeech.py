@@ -348,6 +348,7 @@ class MainApp:
         text = text.replace('\"', '')
         text = text.replace('`', '')
         text = text.replace('´', '')
+        text = text.replace('-','')
 
         dic = CONFIGDIR + '/' + self.lang + '.dic'
 
@@ -362,12 +363,27 @@ class MainApp:
                     good = ' '
                 text = text.replace(bad, good)
 
-        os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
-
+        print len(text)
+        discours = text.split('\n\n')
+        i = 0
+        fichiers = []
+        text = ''
+        while i < len(discours):
+            if len(text) + len(discours[i]) < 32767:
+                text += discours[i] + ' '
+                i += 1
+            if len(text) + len(discours[i]) >= 32767 or i == len(discours):
+                print len(text)
+                fichier = CACHEFOLDER + 'speech' + str(i) + '.wav'
+                fichiers.append(fichier)
+                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier, text ))
+                text = ''
+        
+        os.system('sox %s %s' % ( ' '.join(fichiers), SPEECH ))
         player = self.onPlayer(SPEECH)
         self.player.set_state(gst.STATE_PLAYING)
-
-        self.buttonState()
+        for fichier in fichiers:
+            os.remove(fichier)
 
 
     # player fonction
