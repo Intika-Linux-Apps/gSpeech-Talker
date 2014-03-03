@@ -363,27 +363,29 @@ class MainApp:
                     good = ' '
                 text = text.replace(bad, good)
 
-        print len(text)
         discours = text.split('\n\n')
         i = 0
         fichiers = []
+        noms = []
         text = ''
         while i < len(discours):
-            if len(text) + len(discours[i]) < 32767:
+            if len(text) + len(discours[i]) >= 32767 or i == len(discours)-1:
+                filename = CACHEFOLDER + 'speech' + str(i) + '.wav'
+                fichiers.append([filename,text])
+                text = ''
+                if i == len(discours)-1: i += 1
+            else:
                 text += discours[i] + ' '
                 i += 1
-            if len(text) + len(discours[i]) >= 32767 or i == len(discours):
-                print len(text)
-                fichier = CACHEFOLDER + 'speech' + str(i) + '.wav'
-                fichiers.append(fichier)
-                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier, text ))
-                text = ''
-        
-        os.system('sox %s %s' % ( ' '.join(fichiers), SPEECH ))
+
+        for fichier in fichiers:
+            os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier[0], fichier[1] ))
+            noms.append(fichier[0])
+        os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
         player = self.onPlayer(SPEECH)
         self.player.set_state(gst.STATE_PLAYING)
         for fichier in fichiers:
-            os.remove(fichier)
+            os.remove(fichier[0])
 
 
     # player fonction
