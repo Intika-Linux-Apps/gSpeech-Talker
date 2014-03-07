@@ -379,8 +379,7 @@ class MainApp:
                     text = ''
             nproc = int(.5 * multiprocessing.cpu_count())
             if nproc == 0: nproc = 1
-            pool = multiprocessing.Pool(nproc)
-            pool.map(os.system, commands)
+            multiprocessing.Pool(nproc).map(os.system, commands)
             os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
             player = self.onPlayer(SPEECH)
             self.player.set_state(gst.STATE_PLAYING)
