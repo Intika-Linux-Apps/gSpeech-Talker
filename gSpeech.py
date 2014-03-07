@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 
-import os, sys, pynotify, shutil, tempfile, ConfigParser, subprocess
+import os, sys, pynotify, shutil, tempfile, ConfigParser, subprocess, multiprocessing
 
 import pygtk
 pygtk.require('2.0')
@@ -366,6 +366,7 @@ class MainApp:
             os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
         else:
             discours = text.split('\n\n')
+            commands = []
             fichiers = []
             noms = []
             text = ''
@@ -373,16 +374,18 @@ class MainApp:
                 text += paragraph
                 if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
                     filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
-                    fichiers.append([filename,text])
+                    commands.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
+                    noms.append(filename)
                     text = ''
-            for fichier in fichiers:
-                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier[0], fichier[1] ))
-                noms.append(fichier[0])
+            nproc = int(.5 * multiprocessing.cpu_count())
+            if nproc == 0: nproc = 1
+            pool = multiprocessing.Pool(nproc)
+            pool.map(os.system, commands)
             os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
             player = self.onPlayer(SPEECH)
             self.player.set_state(gst.STATE_PLAYING)
-            for fichier in fichiers:
-                os.remove(fichier[0])
+            for fichier in noms:
+                os.remove(fichier)
 
     # player fonction
     def onPlayer(self,file):
