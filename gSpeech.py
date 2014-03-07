@@ -362,31 +362,27 @@ class MainApp:
                 except :
                     good = ' '
                 text = text.replace(bad, good)
-
-        discours = text.split('\n\n')
-        i = 0
-        fichiers = []
-        noms = []
-        text = ''
-        while i < len(discours):
-            if len(text) + len(discours[i]) >= 32767 or i == len(discours)-1:
-                filename = CACHEFOLDER + 'speech' + str(i) + '.wav'
-                fichiers.append([filename,text])
-                text = ''
-                if i == len(discours)-1: i += 1
-            else:
-                text += discours[i] + ' '
-                i += 1
-
-        for fichier in fichiers:
-            os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier[0], fichier[1] ))
-            noms.append(fichier[0])
-        os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
-        player = self.onPlayer(SPEECH)
-        self.player.set_state(gst.STATE_PLAYING)
-        for fichier in fichiers:
-            os.remove(fichier[0])
-
+        if len(text) <= 32768:
+            os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
+        else:
+            discours = text.split('\n\n')
+            fichiers = []
+            noms = []
+            text = ''
+            for idx,paragraph in enumerate(discours):
+                text += paragraph
+                if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
+                    filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
+                    fichiers.append([filename,text])
+                    text = ''
+            for fichier in fichiers:
+                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, fichier[0], fichier[1] ))
+                noms.append(fichier[0])
+            os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
+            player = self.onPlayer(SPEECH)
+            self.player.set_state(gst.STATE_PLAYING)
+            for fichier in fichiers:
+                os.remove(fichier[0])
 
     # player fonction
     def onPlayer(self,file):
