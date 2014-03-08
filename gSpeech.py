@@ -101,7 +101,6 @@ class MainApp:
             self.tray.connect('activate', self.onLeftClick) # left click
             self.tray.set_tooltip((_(u"SVOX Pico simple GUI")))
 
-
         self.window = gtk.Dialog(APPNAME,
                            None,
                            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT)
@@ -124,7 +123,6 @@ class MainApp:
         button.add_accelerator("clicked",self.accelgroup , ord('c'), gtk.gdk.SHIFT_MASK, gtk.ACCEL_VISIBLE)
         hbox.pack_start(button, expand=False, fill=False)
 
-
         button = gtk.Button()
         button.set_image(gtk.image_new_from_stock(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_MENU))
         button.set_label(_(u"Read selected text"))
@@ -133,7 +131,6 @@ class MainApp:
         hbox.pack_end(button, expand=False, fill=False)
 
         self.window.vbox.pack_start(hbox, expand=False, fill=False)
-
 
         hbox = gtk.HBox()
 
@@ -173,14 +170,12 @@ class MainApp:
 
         self.window.vbox.pack_start(hbox, expand=False, fill=False)
 
-
     def changed_cb(self, combobox):
         model = combobox.get_model()
         index = combobox.get_active()
         if index:
             self.onLang(self, model[index][0])
         return
-
 
     # action on right click
     def onRightClick(self, icon=None, event_button=None, event_time=None):
@@ -203,7 +198,6 @@ class MainApp:
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
-
 
         # Execute menu item : execute speeching from X.org clipboard
         rmItem = gtk.ImageMenuItem()
@@ -285,7 +279,6 @@ class MainApp:
         elif IsAppIndicator == False :
             menu.popup(None, None, gtk.status_icon_position_menu, event_button, event_time, self.tray)
 
-
     ## onReload item function: reload script
     def onReload(self, widget):
         myscript = os.path.abspath(sys.argv[0])
@@ -362,29 +355,40 @@ class MainApp:
                 except :
                     good = ' '
                 text = text.replace(bad, good)
+
         if len(text) <= 32768:
             os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
-        else:
+
+        elif os.path.isfile('/usr/bin/sox'):
             discours = text.split('\n\n')
-            commands = []
-            fichiers = []
-            noms = []
+            cmds = []
+            names = []
             text = ''
             for idx,paragraph in enumerate(discours):
                 text += paragraph
                 if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
                     filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
-                    commands.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
-                    noms.append(filename)
+                    cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
+                    names.append(filename)
                     text = ''
+
             nproc = int(.5 * multiprocessing.cpu_count())
-            if nproc == 0: nproc = 1
-            multiprocessing.Pool(nproc).map(os.system, commands)
-            os.system('sox %s %s' % ( ' '.join(noms), SPEECH ))
-            player = self.onPlayer(SPEECH)
-            self.player.set_state(gst.STATE_PLAYING)
-            for fichier in noms:
+            if nproc == 0:
+                nproc = 1
+            multiprocessing.Pool(nproc).map(os.system, cmds)
+            os.system('sox %s %s' % ( ' '.join(names), SPEECH ))
+            for fichier in names:
                 os.remove(fichier)
+
+        else:
+            """A corriger"""
+            print "Le text est trop long pour être lue sans utiliser sox"
+            exit()
+
+        player = self.onPlayer(SPEECH)
+        self.player.set_state(gst.STATE_PLAYING)
+
+        self.buttonState()
 
     # player fonction
     def onPlayer(self,file):
@@ -406,11 +410,9 @@ class MainApp:
 
         self.buttonState()
 
-
     def onStop(self, widget, data=None):
         self.player.set_state(gst.STATE_NULL)
         self.buttonState()
-
 
     def buttonState(self):
         if gst.STATE_PLAYING == self.player.get_state()[1] :
@@ -424,8 +426,6 @@ class MainApp:
             self.PlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU))
             self.WinPlayPause.set_label(gtk.STOCK_MEDIA_PLAY)
             self.WinPlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU))
-
-
 
     # saving file speech on clicking Save item
     def onSave(self, widget, data=None):
@@ -444,8 +444,6 @@ class MainApp:
 
     def main(self):
         gtk.main()
-
-
 
 # About dialog class
 class AboutDialog:
@@ -485,7 +483,6 @@ class SaveFile:
         #~ dialog.set_transient_for(window)
         #~ dialog.set_decorated(False)
 
-
         filter = gtk.FileFilter()
         filter.set_name(_(u"Wave file (*.wav)"))
         filter.add_mime_type("audio/x-wav")
@@ -498,7 +495,6 @@ class SaveFile:
             shutil.copy(SPEECH, filename2)
 
         dialog.destroy()
-
 
 
 def IniRead(configfile, section, key, default):
@@ -546,7 +542,6 @@ if __name__ == "__main__":
     file = open(PID, 'w')
     file.write(pid)
     file.close()
-
 
     CONFIGDIR = os.path.join(os.path.expanduser('~'), '.config/gSpeech')
     if not os.path.isdir(CONFIGDIR) :
