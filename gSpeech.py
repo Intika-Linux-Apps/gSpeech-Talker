@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
 
-import os, sys, pynotify, shutil, tempfile, ConfigParser, subprocess, multiprocessing
+import os, sys, pynotify, shutil, tempfile, ConfigParser, subprocess, multiprocessing, wave
 
 import pygtk
 pygtk.require('2.0')
@@ -359,31 +359,38 @@ class MainApp:
         if len(text) <= 32768:
             os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
 
-        elif os.path.isfile('/usr/bin/sox'):
+        else:
             discours = text.split('\n\n')
             cmds = []
-            names = []
+            wflist = []
             text = ''
             for idx,paragraph in enumerate(discours):
                 text += paragraph
                 if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
                     filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
                     cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
-                    names.append(filename)
+                    wflist.append(filename)
                     text = ''
 
             nproc = int(.5 * multiprocessing.cpu_count())
             if nproc == 0:
                 nproc = 1
             multiprocessing.Pool(nproc).map(os.system, cmds)
-            os.system('sox %s %s' % ( ' '.join(names), SPEECH ))
-            for fichier in names:
-                os.remove(fichier)
 
-        else:
-            """A corriger"""
-            print "Le text est trop long pour être lue sans utiliser sox"
-            exit()
+            data= []
+            for wavefile in wflist:
+                w = wave.open(wavefile, 'rb')
+                data.append( [w.getparams(), w.readframes(w.getnframes())] )
+                w.close()
+
+            output = wave.open(SPEECH, 'wb')
+            output.setparams(data[0][0])
+            output.writeframes(data[0][1])
+            output.writeframes(data[1][1])
+            output.close()
+
+            for wavefile in wflist:
+                os.remove(wavefile)
 
         player = self.onPlayer(SPEECH)
         self.player.set_state(gst.STATE_PLAYING)
