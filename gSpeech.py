@@ -207,10 +207,10 @@ class MainApp:
         menu.append(rmItem)
 
         # Play item menu
-        self.PlayPause = gtk.ImageMenuItem(gtk.STOCK_MEDIA_PAUSE)
-        self.PlayPause.connect('activate', self.onPlayPause)
-        self.PlayPause.show()
-        menu.append(self.PlayPause)
+        self.MenuPlayPause = gtk.ImageMenuItem(gtk.STOCK_MEDIA_PAUSE)
+        self.MenuPlayPause.connect('activate', self.onPlayPause)
+        self.MenuPlayPause.show()
+        menu.append(self.MenuPlayPause)
 
         # Stop  item menu
         rmItem = gtk.ImageMenuItem(gtk.STOCK_MEDIA_STOP)
@@ -416,14 +416,18 @@ class MainApp:
 
     def buttonState(self):
         if gst.STATE_PLAYING == self.player.get_state()[1] :
-            self.PlayPause.set_label(gtk.STOCK_MEDIA_PAUSE)
-            self.PlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PAUSE, gtk.ICON_SIZE_MENU))
+
+            self.MenuPlayPause.set_label(gtk.STOCK_MEDIA_PAUSE)
+            self.MenuPlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PAUSE, gtk.ICON_SIZE_MENU))
+
             self.WinPlayPause.set_label(gtk.STOCK_MEDIA_PAUSE)
             self.WinPlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PAUSE, gtk.ICON_SIZE_MENU))
 
         elif gst.STATE_PAUSED == self.player.get_state()[1] or gst.STATE_NULL == self.player.get_state()[1] :
-            self.PlayPause.set_label(gtk.STOCK_MEDIA_PLAY)
-            self.PlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU))
+
+            self.MenuPlayPause.set_label(gtk.STOCK_MEDIA_PLAY)
+            self.MenuPlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU))
+
             self.WinPlayPause.set_label(gtk.STOCK_MEDIA_PLAY)
             self.WinPlayPause.set_image(gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU))
 
