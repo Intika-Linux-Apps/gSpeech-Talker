@@ -21,12 +21,12 @@ gettext.install(APPNAME, localdir)
 #########################
 # Application info
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
-VERSION = "0.5.0.0"
+VERSION = "0.5.0.1"
 AUTHORNAME = "Lahire Biette"
 AUTHOREMAIL = "<tuxmouraille@gmail.com>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
 COMMENT = _("A little script to read SVOX Pico texts selected with the mouse.")
-COPYRIGHT_YEAR = '2011,2012'
+COPYRIGHT_YEAR = '2011,2014'
 COPYRIGHTS = u"Copyright © %s %s" % (COPYRIGHT_YEAR, AUTHORNAME)
 AUTHORS = [
     _(u"Developers :"),
@@ -39,7 +39,7 @@ TRANSLATORS = u"pt-PT, pt-BR, es-ES & it-IT :\n\
 Dupouy Paul"
 
 #~ ARTISTS = []
-WEBSITE = 'https://github.com/tuxmouraille/MesApps/tree/master/gSpeech'
+WEBSITE = 'https://github.com/tuxmouraille/gSpeech'
 
 LICENSE = """Copyright © %s - %s.
 
@@ -455,7 +455,8 @@ class AboutDialog:
     def __init__(self):
         # Create AboutDialog object
         dialog = gtk.AboutDialog()
-        dialog.set_logo_icon_name(APPNAME)
+        #~ dialog.set_logo_icon_name(APPNAME)
+        dialog.set_logo(gtk.gdk.pixbuf_new_from_file(ICON))
         dialog.set_name(APPNAME)
         dialog.set_version(VERSION)
         dialog.set_copyright(COPYRIGHTS)
