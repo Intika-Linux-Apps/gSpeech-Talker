@@ -10,6 +10,7 @@ Installation instruction:
 Ubuntu:
 
 Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0)
+
 Suggests: python-notify (>=0.1) sox
 
 
