@@ -21,7 +21,7 @@ gettext.install(APPNAME, localdir)
 #########################
 # Application info
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
-VERSION = "0.4.5.4"
+VERSION = "0.5.0.0""
 AUTHORNAME = "Lahire Biette"
 AUTHOREMAIL = "<tuxmouraille@gmail.com>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
