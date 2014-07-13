@@ -9,9 +9,9 @@ Installation instruction:
 
 Ubuntu:
 
-Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0)
+Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0) python-notify (>=0.1)
 
-Suggests: python-notify (>=0.1) sox
+Suggests: python-appindicator sox
 
 
 In any directory, where you want to install
@@ -26,5 +26,5 @@ git clone https://github.com/tuxmouraille/gSpeech.git
 
 
 NB:
-- python-notify is used for a best integration with Ubuntu
+- python-appindicator is used for a best integration with Ubuntu
 - sox is needed to speech text with more than 2^15 characters

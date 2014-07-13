@@ -330,65 +330,70 @@ class MainApp:
 
     # on Execute item function : execute speech
     def onExecute(self, widget, data=None):
-        pynotify.Notification(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
-
         if widget.get_label() == _(u"Read selected text") :
             text = gtk.clipboard_get(selection="PRIMARY").wait_for_text()
         else :
             text = gtk.clipboard_get(selection="CLIPBOARD").wait_for_text()
 
-        #~ text = text.lower()
-        text = text.replace('\"', '')
-        text = text.replace('`', '')
-        text = text.replace('´', '')
-        text = text.replace('-','')
+        if text == None :
+            pynotify.Notification(APPNAME, _(u"No text selected."), self.icon).show()
 
-        dic = CONFIGDIR + '/' + self.lang + '.dic'
+        else :
+            pynotify.Notification(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
 
-        if os.path.exists(dic) :
-            for line in open(dic,'r').readlines():
+            #~ text = text.lower()
+            text = text.replace('\"', '')
+            text = text.replace('`', '')
+            text = text.replace('´', '')
+            text = text.replace('-','')
 
-                bad = line.split('=')[0]
-                #~ bad = bad.lower()
-                try :
-                    good = line.split('=')[1]
-                except :
-                    good = ' '
-                text = text.replace(bad, good)
+            dic = CONFIGDIR + '/' + self.lang + '.dic'
 
-        if len(text) <= 32768:
-            os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
+            if os.path.exists(dic) :
+                for line in open(dic,'r').readlines():
 
-        elif os.path.isfile('/usr/bin/sox'):
-            discours = text.split('\n\n')
-            cmds = []
-            names = []
-            text = ''
-            for idx,paragraph in enumerate(discours):
-                text += paragraph
-                if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
-                    filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
-                    cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
-                    names.append(filename)
-                    text = ''
+                    bad = line.split('=')[0]
+                    #~ bad = bad.lower()
+                    try :
+                        good = line.split('=')[1]
+                    except :
+                        good = ' '
+                    text = text.replace(bad, good)
 
-            nproc = int(.5 * multiprocessing.cpu_count())
-            if nproc == 0:
-                nproc = 1
-            multiprocessing.Pool(nproc).map(os.system, cmds)
-            os.system('sox %s %s' % ( ' '.join(names), SPEECH ))
-            for fichier in names:
-                os.remove(fichier)
+            if len(text) <= 32768:
+                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
 
-        else:
-            """A corriger"""
-            print "Le text est trop long pour être lue sans utiliser sox"
-            exit()
+            elif os.path.isfile('/usr/bin/sox'):
+                discours = text.split('\n\n')
+                cmds = []
+                names = []
+                text = ''
+                for idx,paragraph in enumerate(discours):
+                    text += paragraph
+                    if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
+                        filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
+                        cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
+                        names.append(filename)
+                        text = ''
 
-        player = self.onPlayer(SPEECH)
-        self.player.set_state(gst.STATE_PLAYING)
+                nproc = int(.5 * multiprocessing.cpu_count())
+                if nproc == 0:
+                    nproc = 1
+                multiprocessing.Pool(nproc).map(os.system, cmds)
+                os.system('sox %s %s' % ( ' '.join(names), SPEECH ))
+                for fichier in names:
+                    os.remove(fichier)
 
-        self.buttonState()
+            else:
+                """A corriger"""
+                print "Le text est trop long pour être lue sans utiliser sox"
+                exit()
+
+            player = self.onPlayer(SPEECH)
+            self.player.set_state(gst.STATE_PLAYING)
+
+            self.buttonState()
+
 
     # player fonction
     def onPlayer(self,file):
