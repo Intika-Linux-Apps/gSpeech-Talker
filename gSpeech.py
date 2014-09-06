@@ -21,7 +21,7 @@ gettext.install(APPNAME, localdir)
 #########################
 # Application info
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
-VERSION = "0.5.0.1"
+VERSION = "0.5.0.2"
 AUTHORNAME = "Lahire Biette"
 AUTHOREMAIL = "<tuxmouraille@gmail.com>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
@@ -182,16 +182,6 @@ class MainApp:
         # create menu
         menu = gtk.Menu()
 
-        mediawin = gtk.ImageMenuItem(_(u"Multimedia window"))
-        mediawin.connect('activate', self.onMediaDialog)
-        mediawin.show()
-        menu.append(mediawin)
-
-        # Separator
-        rmItem =  gtk.SeparatorMenuItem()
-        rmItem.show()
-        menu.append(rmItem)
-
         # Execute menu item : execute speeching from Desktop clipboard
         rmItem = gtk.ImageMenuItem()
         rmItem.set_label(_(u"Read clipboard content"))
@@ -223,6 +213,16 @@ class MainApp:
         rmItem.connect('activate', self.onSave)
         rmItem.show()
         menu.append(rmItem)
+
+        # Separator
+        rmItem =  gtk.SeparatorMenuItem()
+        rmItem.show()
+        menu.append(rmItem)
+
+        mediawin = gtk.ImageMenuItem(_(u"Multimedia window"))
+        mediawin.connect('activate', self.onMediaDialog)
+        mediawin.show()
+        menu.append(mediawin)
 
         # Separator
         rmItem =  gtk.SeparatorMenuItem()
