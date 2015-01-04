@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
@@ -17,43 +16,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Languages"
+msgstr "Línguas"
 
 msgid "Open dictionary"
-msgstr "Abrir el diccionario"
+msgstr "Abrir o dicionário"
 
+#: gSpeech.py:51
+msgid "A little script to read SVOX Pico texts selected with the mouse."
+msgstr "Um pequeno script para ler com SVOX Pico os textos selecionados com o rato"
 
 #: gSpeech.py:56
 msgid "Developers :"
-msgstr "Desarrolladores :"
+msgstr "Programadores :"
 
-#: gSpeech.py:61
+#: gSpeech.py:109
 msgid "SVOX Pico simple GUI"
-msgstr "Interfaz sencilla para SVOX Pico"
+msgstr "Interface simple para SVOX Pico"
 
 #: gSpeech.py:109,233
 msgid "Read selected text"
-msgstr "Lee el texto seleccionado"
+msgstr "Leia o texto selecionado"
 
 #: gSpeech.py:116,235
 msgid "Read clipboard content"
-msgstr "Leer el contenido del portapapeles"
-
-#: gSpeech.py:188
-msgid "I'm reading the text. One moment please."
-msgstr "Estoy leyendo el texto. Un momento por favor."
+msgstr "Leia o conteúdo da prancheta"
 
 #: gSpeech.py:190
 msgid "Multimedia window"
-msgstr "ventana de Multimedia"
+msgstr "janela Multimedia"
 
-#: gSpeech.py:239
-msgid "A little script to read SVOX Pico texts selected with the mouse."
-msgstr "Un pequeño script para leer con SVOX Pico  los textos seleccionados con el ratón."
+#: gSpeech.py:237
+msgid "I'm reading the text. One moment please."
+msgstr "Estou lendo o texto. Espere, faça favor."
 
-#: gSpeech.py:259
+#: gSpeech.py:291
 msgid "Save the speech"
-msgstr "Salvar la lectura"
+msgstr "Salvar la leitura"
 
-#: gSpeech.py:267
+#: gSpeech.py:299
 msgid "Wave file (*.wav)"
-msgstr "Archivo wave (*.wav)"
+msgstr "Ficheiro wave (*.wav)"

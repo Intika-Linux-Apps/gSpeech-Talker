@@ -17,41 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Languages"
+msgstr "Languages"
+
 msgid "Open dictionary"
-msgstr "Öffnen aktuelle Wörterbuch"
+msgstr "Open dictionary"
 
 #: gSpeech.py:56
 msgid "Developers :"
-msgstr "Entwickler :"
+msgstr "Developers :"
 
 #: gSpeech.py:61
 msgid "SVOX Pico simple GUI"
-msgstr "Einfache Schnittstelle für SVOX Pico"
+msgstr "SVOX Pico simple GUI"
 
 #: gSpeech.py:109,233
 msgid "Read selected text"
-msgstr "Lesen Sie den ausgewählten Text"
+msgstr "Read selected text"
 
 #: gSpeech.py:116,235
 msgid "Read clipboard content"
-msgstr "Lesen Sie den Inhalt der Zwischenablage"
+msgstr "Read clipboard content"
 
 #: gSpeech.py:188
 msgid "I'm reading the text. One moment please."
-msgstr "Ich lese den Text. Einen Moment bitte."
+msgstr "I'm reading the text. One moment please."
 
 #: gSpeech.py:190
 msgid "Multimedia window"
-msgstr "Multimedia-Fenster"
+msgstr "Multimedia window"
 
 #: gSpeech.py:239
 msgid "A little script to read SVOX Pico texts selected with the mouse."
-msgstr "Ein kleines Skript zu lesen SVOX Pico Texte mit der Maus ausgewählt."
+msgstr "A little script to read SVOX Pico texts selected with the mouse."
 
 #: gSpeech.py:259
 msgid "Save the speech"
-msgstr "Speichern Sie die Rede"
+msgstr "Save the speech"
 
 #: gSpeech.py:267
 msgid "Wave file (*.wav)"
-msgstr "Audio-Datei Wave (*.wav)"
+msgstr "Wave file (*.wav)"

@@ -236,7 +236,7 @@ class MainApp:
         menu.append(rmItem)
 
         # Preference item menu
-        rmItem = gtk.ImageMenuItem(_(u"Language"))
+        rmItem = gtk.ImageMenuItem(_(u"Languages"))
         rmItem.show()
         # Creating and linking langues submenu
         menulngs = gtk.Menu()

@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
@@ -17,42 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Languages"
+msgstr ""
 
 msgid "Open dictionary"
-msgstr "Open dictionary"
+msgstr ""
 
 #: gSpeech.py:56
-msgid "Developers :"
-msgstr "Developers :"
+msgid "Developers:"
+msgstr ""
 
 #: gSpeech.py:61
 msgid "SVOX Pico simple GUI"
-msgstr "SVOX Pico simple GUI"
+msgstr ""
 
 #: gSpeech.py:109,233
 msgid "Read selected text"
-msgstr "Read selected text"
+msgstr ""
 
 #: gSpeech.py:116,235
 msgid "Read clipboard content"
-msgstr "Read clipboard content"
+msgstr ""
 
 #: gSpeech.py:188
 msgid "I'm reading the text. One moment please."
-msgstr "I'm reading the text. One moment please."
+msgstr ""
 
 #: gSpeech.py:190
 msgid "Multimedia window"
-msgstr "Multimedia window"
+msgstr ""
 
 #: gSpeech.py:239
 msgid "A little script to read SVOX Pico texts selected with the mouse."
-msgstr "A little script to read SVOX Pico texts selected with the mouse."
+msgstr ""
 
 #: gSpeech.py:259
 msgid "Save the speech"
-msgstr "Save the speech"
+msgstr ""
 
 #: gSpeech.py:267
 msgid "Wave file (*.wav)"
-msgstr "Wave file (*.wav)"
+msgstr ""
