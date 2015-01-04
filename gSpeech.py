@@ -21,7 +21,7 @@ gettext.install(APPNAME, localdir)
 #########################
 # Application info
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
-VERSION = "0.5.0.2"
+VERSION = "0.6.0.0"
 AUTHORNAME = "Lahire Biette"
 AUTHOREMAIL = "<tuxmouraille@gmail.com>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
@@ -229,8 +229,14 @@ class MainApp:
         rmItem.show()
         menu.append(rmItem)
 
+        # Open the dictionnary in default editor
+        rmItem = gtk.ImageMenuItem(_(u"Open dictionary"))
+        rmItem.connect('activate', self.onDictionnary)
+        rmItem.show()
+        menu.append(rmItem)
+
         # Preference item menu
-        rmItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
+        rmItem = gtk.ImageMenuItem(_(u"Language"))
         rmItem.show()
         # Creating and linking langues submenu
         menulngs = gtk.Menu()
@@ -279,13 +285,24 @@ class MainApp:
         elif IsAppIndicator == False :
             menu.popup(None, None, gtk.status_icon_position_menu, event_button, event_time, self.tray)
 
+
+    ## open the dictionnary file
+    def onDictionnary(self, widget):
+        lngDict = CONFIGDIR + '/' + self.lang + '.dic'
+
+        if not os.path.exists(lngDict) :
+            open(lngDict, 'a').close()
+
+        os.system('xdg-open "%s"' % ( lngDict ))
+
+
     ## onReload item function: reload script
     def onReload(self, widget):
         myscript = os.path.abspath(sys.argv[0])
         subprocess.Popen(myscript)
         sys.exit()
 
-    # action on language submenu items
+    ## action on language submenu items
     def onLang(self, widget, lng):
         self.lang = lng
         #~ self.icon = APPNAME + '-' + self.lang
@@ -347,10 +364,10 @@ class MainApp:
             text = text.replace('´', '')
             text = text.replace('-','')
 
-            dic = CONFIGDIR + '/' + self.lang + '.dic'
+            lngDict = CONFIGDIR + '/' + self.lang + '.dic'
 
-            if os.path.exists(dic) :
-                for line in open(dic,'r').readlines():
+            if os.path.exists(lngDict) :
+                for line in open(lngDict,'r').readlines():
 
                     bad = line.split('=')[0]
                     #~ bad = bad.lower()

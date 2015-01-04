@@ -16,6 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Open dictionary"
+msgstr "Abrir o dicionário"
+
 #: gSpeech.py:51
 msgid "A little script to read SVOX Pico texts selected with the mouse."
 msgstr "Um pequeno script para ler com SVOX Pico os textos selecionados com o rato"

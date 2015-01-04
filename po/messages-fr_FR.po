@@ -17,10 +17,12 @@ msgstr
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Open dictionary"
+msgstr "Ouvrir le dictionnaire"
+
 #: gSpeech.py:56
 msgid "Developers :"
 msgstr "Développeurs :"
-
 
 #: gSpeech.py:61
 msgid "SVOX Pico simple GUI"
