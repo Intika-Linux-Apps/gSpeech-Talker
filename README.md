@@ -9,7 +9,7 @@ Installation instruction:
 
 Ubuntu:
 
-Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0) python-notify (>=0.1) gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-alsa gstreamer0.10-pulseaudio
+Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0) python-notify (>=0.1) gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-pulseaudio
 
 Suggests: python-appindicator sox
 
