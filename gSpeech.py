@@ -312,7 +312,7 @@ class MainApp:
             self.ind.set_icon(self.icon)
 
         elif IsAppIndicator == False :
-            self.tray.set_from_icon_name(self.icon)
+            self.tray.set_from_file(self.icon)
 
     # show about dialog
     def onAbout(self, widget):
