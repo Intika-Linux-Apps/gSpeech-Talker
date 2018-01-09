@@ -6,7 +6,7 @@ import os, sys, shutil, tempfile, ConfigParser, subprocess, multiprocessing
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Notify', '0.7')
-from gi.repository import Gtk, Notify, Gdk
+from gi.repository import Gtk, Notify, Gdk, GdkPixbuf
 
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
@@ -27,7 +27,7 @@ AUTHORNAME = "Lahire Biette,Sardi Carlo"
 AUTHOREMAIL = "<tuxmouraille@gmail.com>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
 COMMENT = _("A little script to read SVOX Pico texts selected with the mouse.")
-COPYRIGHT_YEAR = '2011,2014,2017'
+COPYRIGHT_YEAR = '2011,2014,2018'
 COPYRIGHTS = u"Copyright © %s %s" % (COPYRIGHT_YEAR, AUTHORNAME)
 AUTHORS = [
     _(u"Developers :"),
@@ -36,7 +36,7 @@ AUTHORS = [
     #~ _(u"Contributors:"),
 ]
 
-TRANSLATORS = u"pt-PT, pt-BR, es-ES & it-IT :\n\
+TRANSLATORS = u"pt-PT, pt-BR, es-ES &amp; it-IT :\n\
 Dupouy Paul"
 
 #~ ARTISTS = []
@@ -184,33 +184,31 @@ class MainApp:
         menu = Gtk.Menu()
 
         # Execute menu item : execute speeching from Desktop clipboard
-        rmItem = Gtk.ImageMenuItem()
-        rmItem.set_label(_(u"Read clipboard content"))
+        rmItem = Gtk.MenuItem.new_with_label(_(u"Read clipboard content"))
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
 
         # Execute menu item : execute speeching from X.org clipboard
-        rmItem = Gtk.ImageMenuItem()
-        rmItem.set_label(_(u"Read selected text"))
+        rmItem = Gtk.MenuItem.new_with_label(_(u"Read selected text"))
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
 
         # Play item menu
-        self.MenuPlayPause = Gtk.ImageMenuItem(Gtk.STOCK_MEDIA_PAUSE)
+        self.MenuPlayPause = Gtk.MenuItem.new_with_label("Pause")
         self.MenuPlayPause.connect('activate', self.onPlayPause)
         self.MenuPlayPause.show()
         menu.append(self.MenuPlayPause)
 
         # Stop  item menu
-        rmItem = Gtk.ImageMenuItem(Gtk.STOCK_MEDIA_STOP)
+        rmItem = Gtk.MenuItem.new_with_label("Stop")
         rmItem.connect('activate', self.onStop)
         rmItem.show()
         menu.append(rmItem)
 
         # Save item menu
-        rmItem = Gtk.ImageMenuItem(Gtk.STOCK_SAVE)
+        rmItem = Gtk.MenuItem.new_with_label("Save")
         rmItem.connect('activate', self.onSave)
         rmItem.show()
         menu.append(rmItem)
@@ -220,7 +218,7 @@ class MainApp:
         rmItem.show()
         menu.append(rmItem)
 
-        mediawin = Gtk.ImageMenuItem(_(u"Multimedia window"))
+        mediawin =  Gtk.MenuItem.new_with_label(_(u"Multimedia window"))
         mediawin.connect('activate', self.onMediaDialog)
         mediawin.show()
         menu.append(mediawin)
@@ -231,13 +229,13 @@ class MainApp:
         menu.append(rmItem)
 
         # Open the dictionnary in default editor
-        rmItem = Gtk.ImageMenuItem(_(u"Open dictionary"))
+        rmItem = Gtk.MenuItem.new_with_label(_(u"Open dictionary"))
         rmItem.connect('activate', self.onDictionnary)
         rmItem.show()
         menu.append(rmItem)
 
         # Preference item menu
-        rmItem = Gtk.ImageMenuItem(_(u"Languages"))
+        rmItem = Gtk.MenuItem.new_with_label(_(u"Languages"))
         rmItem.show()
         # Creating and linking langues submenu
         menulngs = Gtk.Menu()
@@ -262,19 +260,19 @@ class MainApp:
         menu.append(rmItem)
 
         ## Reload item menu
-        item = Gtk.ImageMenuItem(Gtk.STOCK_REFRESH)
+        item = Gtk.MenuItem.new_with_label("Refresh")
         item.connect('activate', self.onReload)
         item.show()
         menu.append(item)
 
         # About item menu : show About dialog
-        about = Gtk.ImageMenuItem(Gtk.STOCK_ABOUT)
+        about = Gtk.MenuItem.new_with_label("About")
         about.connect('activate', self.onAbout)
         about.show()
         menu.append(about)
 
         # Quit item menu
-        item = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+        item = Gtk.MenuItem.new_with_label("Quit")
         item.connect('activate', self.destroy)
         item.show()
         menu.append(item)
@@ -348,6 +346,7 @@ class MainApp:
 
     # on Execute item function : execute speech
     def onExecute(self, widget, data=None):
+        print(widget)
         if widget.get_label() == _(u"Read selected text") :
             text = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY).wait_for_text()
         else :
@@ -480,7 +479,7 @@ class AboutDialog:
         # Create AboutDialog object
         dialog = Gtk.AboutDialog()
         #~ dialog.set_logo_icon_name(APPNAME)
-        dialog.set_logo(Gtk.Gdk.pixbuf_new_from_file(ICON))
+        dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file(ICON))
         dialog.set_name(APPNAME)
         dialog.set_version(VERSION)
         dialog.set_copyright(COPYRIGHTS)
