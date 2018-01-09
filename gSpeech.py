@@ -324,7 +324,6 @@ class MainApp:
         if self.window.get_property('visible'):
             self.window.hide()
         else :
-
             self.window.show_all()
 
     # error message on playing function
@@ -347,7 +346,6 @@ class MainApp:
 
     # on Execute item function : execute speech
     def onExecute(self, widget, data=None):
-        print(widget)
         if widget.get_label() == _(u"Read selected text") :
             text = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY).wait_for_text()
         else :
