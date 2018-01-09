@@ -24,7 +24,7 @@ gettext.install(APPNAME, localdir)
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
 VERSION = "0.7.0.0"
 AUTHORNAME = "Lahire Biette,Sardi Carlo"
-AUTHOREMAIL = "<tuxmouraille@gmail.com>"
+AUTHOREMAIL = "<tuxmouraille@gmail.com>,<lusumdev@zoho.eu>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
 COMMENT = _("A little script to read SVOX Pico texts selected with the mouse.")
 COPYRIGHT_YEAR = '2011,2014,2018'
