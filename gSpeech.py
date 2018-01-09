@@ -405,6 +405,8 @@ class MainApp:
                 print("Le text est trop long pour être lue sans utiliser sox")
                 exit()
 
+            if hasattr(self, 'player'):
+                self.player.set_state(Gst.State.NULL)
             player = self.onPlayer(SPEECH)
             self.player.set_state(Gst.State.PLAYING)
 
@@ -440,18 +442,14 @@ class MainApp:
         if Gst.State.PLAYING == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
 
             self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
-            self.MenuPlayPause.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PAUSE, Gtk.IconSize.MENU))
 
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
-            self.WinPlayPause.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PAUSE, Gtk.IconSize.MENU))
 
         elif Gst.State.PAUSED == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] or Gst.State.NULL == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
 
             self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
-            self.MenuPlayPause.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.MENU))
 
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
-            self.WinPlayPause.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.MENU))
 
     # saving file speech on clicking Save item
     def onSave(self, widget, data=None):
