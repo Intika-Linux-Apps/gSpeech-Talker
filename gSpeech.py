@@ -427,13 +427,10 @@ class MainApp:
 
     # play, pause and stop function for respectivs items
     def onPlayPause(self, widget, data=None):
-        print(widget.get_label())
-        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY or widget.get_label() =='Play':
+        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY :
             self.player.set_state(Gst.State.PLAYING)
-            print("play")
-        else:
+        else :
             self.player.set_state(Gst.State.PAUSED)
-            print("pause")
 
         self.buttonState()
 
@@ -443,13 +440,11 @@ class MainApp:
 
     def buttonState(self):
         if Gst.State.PLAYING == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-            print("pause2")
-            self.MenuPlayPause.label.set_text("Pause")
+            self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
 
         elif Gst.State.PAUSED == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] or Gst.State.NULL == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-            print("play2")
-            self.MenuPlayPause.label.set_text"Play")
+            self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
 
     # saving file speech on clicking Save item
