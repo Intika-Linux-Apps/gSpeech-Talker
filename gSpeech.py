@@ -246,7 +246,8 @@ class MainApp:
         smItem = Gtk.RadioMenuItem(None, None)
         for i in LISTLANG:
             # Creating new item
-            smItem = Gtk.RadioMenuItem(smItem, i, True)
+            #smItem = Gtk.RadioMenuItem(smItem, i, True)
+            smItem = Gtk.RadioMenuItem.new_with_label_from_widget(smItem, i)
             # ... adding item in submenu
             menulngs.append(smItem)
             # linking it with onLang fonction
