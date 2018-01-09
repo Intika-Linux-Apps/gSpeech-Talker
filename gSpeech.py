@@ -440,15 +440,11 @@ class MainApp:
 
     def buttonState(self):
         if Gst.State.PLAYING == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-
             self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
-
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
 
         elif Gst.State.PAUSED == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] or Gst.State.NULL == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-
             self.MenuPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
-
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
 
     # saving file speech on clicking Save item
@@ -498,10 +494,10 @@ class SaveFile:
     def __init__(self):
         dialog = Gtk.FileChooserDialog(_(u"Save the speech"),
                                        None,
-                                       Gtk.FILE_CHOOSER_ACTION_SAVE,
-                                       (Gtk.STOCK_CANCEL, Gtk.RESPONSE_CANCEL,
-                                        Gtk.STOCK_OK, Gtk.RESPONSE_OK))
-        dialog.set_default_response(Gtk.RESPONSE_OK)
+                                       Gtk.FileChooserAction.SAVE,
+                                       (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                                        Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        dialog.set_default_response(Gtk.ResponseType.OK)
         dialog.set_current_folder(os.path.expanduser('~'))
 
         #~ dialog.set_modal(False)
@@ -515,7 +511,7 @@ class SaveFile:
         dialog.add_filter(filter)
 
         response = dialog.run()
-        if response == Gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             filename2 = dialog.get_filename()
             shutil.copy(SPEECH, filename2)
 
