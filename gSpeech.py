@@ -97,7 +97,7 @@ class MainApp:
         elif IsAppIndicator == False :
             # create GTK status icon
             self.tray = Gtk.StatusIcon()
-            self.tray.set_from_icon_name(self.icon) # select icon
+            self.tray.set_from_file(self.icon) # select icon
             self.tray.connect('popup-menu', self.onRightClick) # right click
             self.tray.connect('activate', self.onLeftClick) # left click
             self.tray.set_tooltip_text((_(u"SVOX Pico simple GUI")))
