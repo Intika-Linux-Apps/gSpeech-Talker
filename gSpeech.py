@@ -438,11 +438,16 @@ class MainApp:
         self.buttonState()
 
     def buttonState(self):
+        #block handler cause set_active activate the function onPlayPause
+        self.MenuPlayPause.handler_block_by_func(self.onPlayPause)
         if Gst.State.PLAYING == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
+            self.MenuPlayPause.set_active(False)
 
         elif Gst.State.PAUSED == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] or Gst.State.NULL == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
+            self.MenuPlayPause.set_active(True)
+        self.MenuPlayPause.handler_unblock_by_func(self.onPlayPause)
 
     # saving file speech on clicking Save item
     def onSave(self, widget, data=None):
