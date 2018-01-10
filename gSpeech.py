@@ -427,7 +427,7 @@ class MainApp:
 
     # play, pause and stop function for respectivs items
     def onPlayPause(self, widget, data=None):
-        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY or widget.get_active() == False:
+        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY or (hasattr(widget,'get_active') and widget.get_active() == False):
             self.player.set_state(Gst.State.PLAYING)
         else:
             self.player.set_state(Gst.State.PAUSED)
