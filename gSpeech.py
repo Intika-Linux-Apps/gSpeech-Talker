@@ -90,8 +90,8 @@ class MainApp:
         self.icon = ICON
 
         if IsAppIndicator == True :
-            self.ind = appindicator.Indicator(APPNAME, self.icon, appindicator.CATEGORY_APPLICATION_STATUS)
-            self.ind.set_status (appindicator.STATUS_ACTIVE)
+            self.ind =appindicator.Indicator.new(APPNAME, self.icon, appindicator.IndicatorCategory.APPLICATION_STATUS)
+            self.ind.set_status (appindicator.IndicatorStatus.ACTIVE)
             self.onRightClick(self)
 
         elif IsAppIndicator == False :
@@ -196,11 +196,10 @@ class MainApp:
         menu.append(rmItem)
 
         # Play item menu
-        self.MenuPlayPause = Gtk.MenuItem.new_with_label("Pause")
-        self.MenuPlayPause.connect('activate', self.onPlayPause)
-        #self.MenuPlayPause.show()
-        #don't work, so hide it
-        self.MenuPlayPause.hide()
+        self.MenuPlayPause = Gtk.CheckMenuItem.new_with_label("Pause")
+        self.MenuPlayPause.set_active(False)
+        self.MenuPlayPause.connect('toggled', self.onPlayPause)
+        self.MenuPlayPause.show()
         menu.append(self.MenuPlayPause)
 
         # Stop  item menu
@@ -411,7 +410,6 @@ class MainApp:
                 self.player.set_state(Gst.State.NULL)
             player = self.onPlayer(SPEECH)
             self.player.set_state(Gst.State.PLAYING)
-
             self.buttonState()
 
 
@@ -429,11 +427,10 @@ class MainApp:
 
     # play, pause and stop function for respectivs items
     def onPlayPause(self, widget, data=None):
-        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY or widget.get_label() =='Play':
+        if widget.get_label() == Gtk.STOCK_MEDIA_PLAY or widget.get_active() == False:
             self.player.set_state(Gst.State.PLAYING)
         else:
             self.player.set_state(Gst.State.PAUSED)
-
         self.buttonState()
 
     def onStop(self, widget, data=None):
@@ -442,11 +439,9 @@ class MainApp:
 
     def buttonState(self):
         if Gst.State.PLAYING == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-            self.MenuPlayPause.props.label = "Pause"
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PAUSE)
 
         elif Gst.State.PAUSED == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] or Gst.State.NULL == self.player.get_state(Gst.CLOCK_TIME_NONE)[1] :
-            self.MenuPlayPause.props.label = "Play"
             self.WinPlayPause.set_label(Gtk.STOCK_MEDIA_PLAY)
 
     # saving file speech on clicking Save item
@@ -592,8 +587,8 @@ if __name__ == "__main__":
             DefaultLang = "en-US"
 
     try :
-        import appindicator
-
+        gi.require_version('AppIndicator3', '0.1')
+        from gi.repository import AppIndicator3 as appindicator
     except :
         IsAppIndicator = False
 
