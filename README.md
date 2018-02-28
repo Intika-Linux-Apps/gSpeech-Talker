@@ -26,5 +26,4 @@ git clone https://github.com/tuxmouraille/gSpeech.git
 
 
 NB:
-- python-appindicator is used for a best integration with Ubuntu
 - sox is needed to speech text with more than 2^15 characters
