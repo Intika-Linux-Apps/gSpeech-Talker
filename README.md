@@ -9,9 +9,9 @@ Installation instruction:
 
 Ubuntu:
 
-Depends: python (>=2.7) python-gst0.10 (>=0.10) python-gtk2 (>=2.24) libttspico-utils (>= 1.0) python-notify (>=0.1) gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-pulseaudio
+Depends: python (>=2.7) python-gst1.0 (>=1.0) python-gtk2 (>=2.24) libttspico-utils (>= 1.0) python-notify (>=0.1) gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-pulseaudio
 
-Suggests: python-appindicator sox
+Suggests: sox
 
 
 In any directory, where you want to install
