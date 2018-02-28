@@ -515,6 +515,7 @@ class SaveFile:
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             filename2 = dialog.get_filename()
+            filename2 = filename2 + '.wav'
             shutil.copy(SPEECH, filename2)
 
         dialog.destroy()
