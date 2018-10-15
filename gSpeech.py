@@ -353,10 +353,16 @@ class MainApp:
             text = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).wait_for_text()
 
         if text == None :
-            Notify.Notification.new(APPNAME, _(u"No text selected."), self.icon).show()
+            try:
+                Notify.Notification.new(APPNAME, _(u"No text selected."), self.icon).show()
+            except:
+                pass
 
         else :
-            Notify.Notification.new(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
+            try:
+                Notify.Notification.new(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
+            except:
+                pass
 
             #~ text = text.lower()
             text = text.replace('\"', '')
