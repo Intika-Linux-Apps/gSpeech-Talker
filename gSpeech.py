@@ -590,26 +590,27 @@ class Config:
         self._path = path
         raw = ConfigParser.ConfigParser()
         raw.read(self._path)
-        self.show_notification = raw.getboolean(
-            self.section,
-            'shownotification'
-        )
+        if raw.has_section(self.section):
+            self.show_notification = raw.getboolean(
+                self.section,
+                'shownotification'
+            )
 
     def update(self):
         raw = ConfigParser.RawConfigParser()
         raw.add_section(self.section)
         raw.set(
-            'CONFIGURATION',
+            self.section,
             'USEAPPINDICATOR',
             self.use_appindicator
         )
         raw.set(
-            'CONFIGURATION',
+            self.section,
             'DEFAULTLANGUAGE',
             self.default_language
         )
         raw.set(
-            'CONFIGURATION',
+            self.section,
             'SHOWNOTIFICATION',
             self.show_notification
         )
