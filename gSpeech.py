@@ -80,7 +80,7 @@ SPEECH = CACHEFOLDER + 'speech.wav'
 # Main Class
 class MainApp:
     """ the main class of the software """
-    def __init__(self):
+    def __init__(self, config):
         # init app name in notification
         Notify.init('gSpeech')
         # define speech language
@@ -88,6 +88,8 @@ class MainApp:
         # select related icon
         #~ self.icon = APPNAME + '-' + self.lang
         self.icon = ICON
+
+        self.config = config
 
         if IsAppIndicator == True :
             self.ind =appindicator.Indicator.new(APPNAME, self.icon, appindicator.IndicatorCategory.APPLICATION_STATUS)
@@ -273,6 +275,12 @@ class MainApp:
         about.show()
         menu.append(about)
 
+        # Preferences
+        options = Gtk.MenuItem.new_with_label(_("Options"))
+        options.connect('activate', self.onOptions)
+        options.show()
+        menu.append(options)
+
         # Quit item menu
         item = Gtk.MenuItem.new_with_label("Quit")
         item.connect('activate', self.destroy)
@@ -318,7 +326,10 @@ class MainApp:
     # show about dialog
     def onAbout(self, widget):
         self.aboutdiag = AboutDialog()
-        self.aboutdiag
+
+    # show options dialog
+    def onOptions(self, widget):
+        self.options_dialog = OptionDialog(self.config)
 
     # show multimedia control dialog
     def onMediaDialog(self, widget):
@@ -352,17 +363,18 @@ class MainApp:
         else :
             text = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).wait_for_text()
 
-        if text == None :
-            try:
-                Notify.Notification.new(APPNAME, _(u"No text selected."), self.icon).show()
-            except:
-                pass
-
+        if text == None:
+            if self.config.show_notification:
+                try:
+                    Notify.Notification.new(APPNAME, _(u"No text selected."), self.icon).show()
+                except:
+                    pass
         else :
-            try:
-                Notify.Notification.new(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
-            except:
-                pass
+            if self.config.show_notification:
+                try:
+                    Notify.Notification.new(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
+                except:
+                    pass
 
             #~ text = text.lower()
             text = text.replace('\"', '')
@@ -495,6 +507,27 @@ class AboutDialog:
         dialog.connect("response", lambda self, *f: self.destroy())
         dialog.show_all()
 
+class OptionDialog:
+    """ the options dialog class """
+    def __init__(self, config):
+        dialog = Gtk.Dialog(
+            APPNAME,
+            None,
+            Gtk.DialogFlags.MODAL| Gtk.DialogFlags.DESTROY_WITH_PARENT
+        )
+        dialog.set_name(APPNAME)
+        dialog.set_border_width(10)
+        hbox = Gtk.HBox()
+        notification_check = Gtk.CheckButton(_("Active notification"))
+        notification_check.set_active(config.show_notification)
+        notification_check.connect("toggled", self.on_checked, config)
+        hbox.add(notification_check)
+        dialog.vbox.pack_start(hbox, False, False, 0)
+        dialog.show_all()
+
+    def on_checked(self, checkBox, config):
+        config.show_notification = checkBox.get_active()
+        config.update()
 
 # Audio speech wav file class saving
 class SaveFile:
@@ -546,6 +579,42 @@ def IniRead(configfile, section, key, default):
     else :
         return var
 
+class Config:
+    _path = ''
+    use_appindicator = True
+    default_language = ''
+    section = 'CONFIGURATION'
+    show_notification = False
+
+    def __init__(self, path):
+        self._path = path
+        raw = ConfigParser.ConfigParser()
+        raw.read(self._path)
+        self.show_notification = raw.getboolean(
+            self.section,
+            'shownotification'
+        )
+
+    def update(self):
+        raw = ConfigParser.RawConfigParser()
+        raw.add_section(self.section)
+        raw.set(
+            'CONFIGURATION',
+            'USEAPPINDICATOR',
+            self.use_appindicator
+        )
+        raw.set(
+            'CONFIGURATION',
+            'DEFAULTLANGUAGE',
+            self.default_language
+        )
+        raw.set(
+            'CONFIGURATION',
+            'SHOWNOTIFICATION',
+            self.show_notification
+        )
+        with open(self._path, 'wb') as configfile:
+            raw.write(configfile)
 
 if __name__ == "__main__":
     # is PID exists?
@@ -577,15 +646,15 @@ if __name__ == "__main__":
     if not os.path.isdir(CONFIGDIR) :
         os.mkdir(CONFIGDIR, 0775)
 
-    CONFIGFILE = os.path.join(CONFIGDIR,'gspeech.conf')
+    CONFIGFILE = os.path.join(CONFIGDIR, 'gspeech.conf')
     if not os.path.isfile(CONFIGFILE) :
-        config = ConfigParser.RawConfigParser()
-        config.add_section('CONFIGURATION')
-        config.set('CONFIGURATION', 'USEAPPINDICATOR', 'True')
-        config.set('CONFIGURATION', 'DEFAULTLANGUAGE', '')
+        raw = ConfigParser.RawConfigParser()
+        raw.add_section('CONFIGURATION')
+        raw.set('CONFIGURATION', 'USEAPPINDICATOR', 'True')
+        raw.set('CONFIGURATION', 'DEFAULTLANGUAGE', '')
         #~ config.set('CONFIGURATION', 'SHOWMEDIADIALOG', 'False')
         with open(CONFIGFILE, 'wb') as configfile:
-            config.write(configfile)
+            raw.write(configfile)
 
     IsAppIndicator = bool(IniRead(CONFIGFILE, 'CONFIGURATION', 'USEAPPINDICATOR', 'True' ))
 
@@ -605,6 +674,9 @@ if __name__ == "__main__":
         IsAppIndicator = False
 
 
-    gSpeech = MainApp()
+    config = Config(CONFIGFILE)
+    config.use_appindicator = IsAppIndicator
+    config.default_language = DefaultLang
+    gSpeech = MainApp(config)
     gSpeech.main()
 
