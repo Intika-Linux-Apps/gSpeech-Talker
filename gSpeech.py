@@ -584,13 +584,13 @@ class Config:
     use_appindicator = True
     default_language = ''
     section = 'CONFIGURATION'
-    show_notification = False
+    show_notification = True
 
     def __init__(self, path):
         self._path = path
         raw = ConfigParser.ConfigParser()
         raw.read(self._path)
-        if raw.has_section(self.section):
+        if raw.has_option(self.section, 'shownotification'):
             self.show_notification = raw.getboolean(
                 self.section,
                 'shownotification'
