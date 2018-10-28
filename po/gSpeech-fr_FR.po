@@ -12,49 +12,83 @@ msgstr
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: BIETTE LAHIRE <tuxmouraille@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: it-IT\n"
+"Language: fr-FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Languages"
-msgstr "Langues"
-
-msgid "Open dictionary"
-msgstr "Ouvrir le dictionnaire"
-
-#: gSpeech.py:56
-msgid "Developers :"
-msgstr "Développeurs :"
-
-#: gSpeech.py:61
-msgid "SVOX Pico simple GUI"
-msgstr "Interface simple pour SVOX Pico"
-
-#: gSpeech.py:109,233
-msgid "Read selected text"
-msgstr "Lire le texte sélectionné"
-
-#: gSpeech.py:116,235
-msgid "Read clipboard content"
-msgstr "Lire le contenu du presse-papiers"
-
-#: gSpeech.py:188
-msgid "I'm reading the text. One moment please."
-msgstr "Je suis en train de lire le texte."
-
-#: gSpeech.py:190
-msgid "Multimedia window"
-msgstr "Fenêtre multimédia"
-
-#: gSpeech.py:28
+#: gSpeech.py:29
 msgid "A little script to read SVOX Pico texts selected with the mouse."
 msgstr "Un petit script pour lire avec SVOX Pico les textes sélectionnés à la souris."
 
-#: gSpeech.py:259
+#: gSpeech.py:33
+msgid "Developers :"
+msgstr "Développeurs :"
+
+#: gSpeech.py:103
+msgid "SVOX Pico simple GUI"
+msgstr "Interface simple pour SVOX Pico"
+
+#: gSpeech.py:122 gSpeech.py:187
+msgid "Read clipboard content"
+msgstr "Lire le contenu du presse-papiers"
+
+#: gSpeech.py:129 gSpeech.py:193 gSpeech.py:350
+msgid "Read selected text"
+msgstr "Lire le texte sélectionné"
+
+#: gSpeech.py:199
+msgid "Pause"
+msgstr "Pause"
+
+#: gSpeech.py:206
+msgid "Stop"
+msgstr "Stop"
+
+#: gSpeech.py:212
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: gSpeech.py:222
+msgid "Multimedia window"
+msgstr "Fenêtre multimédia"
+
+#: gSpeech.py:233
+msgid "Open dictionary"
+msgstr "Ouvrir le dictionnaire"
+
+#: gSpeech.py:239
+msgid "Languages"
+msgstr "Langues"
+
+#: gSpeech.py:265
+msgid "Refresh"
+msgstr "Rafraichir"
+
+#: gSpeech.py:271
+msgid "About"
+msgstr "À propos"
+
+#: gSpeech.py:277
+msgid "Quit"
+msgstr "Quitter"
+
+#: gSpeech.py:357
+msgid "No text selected."
+msgstr "Aucun texte sélectionné."
+
+#: gSpeech.py:363
+msgid "I'm reading the text. One moment please."
+msgstr "Je suis en train de lire le texte."
+
+#: gSpeech.py:492
+msgid "%s's Website"
+msgstr "Le site internet de %s"
+
+#: gSpeech.py:503
 msgid "Save the speech"
 msgstr "Sauvegarder la lecture"
 
-#: gSpeech.py:267
+#: gSpeech.py:516
 msgid "Wave file (*.wav)"
 msgstr "Fichier wave (*.wav)"

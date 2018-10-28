@@ -9,52 +9,86 @@ msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-08 10:26+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: BIETTE LAHIRE <tuxmouraille@gmail.com>\n"
+"PO-Revision-Date:  2018-10-28 17:37+0100\n"
+"Last-Translator: Jérémie Ferry <ferryjeremie@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it-IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Languages"
-msgstr ""
-
-msgid "Open dictionary"
-msgstr ""
-
-#: gSpeech.py:56
-msgid "Developers:"
-msgstr ""
-
-#: gSpeech.py:61
-msgid "SVOX Pico simple GUI"
-msgstr ""
-
-#: gSpeech.py:109,233
-msgid "Read selected text"
-msgstr ""
-
-#: gSpeech.py:116,235
-msgid "Read clipboard content"
-msgstr ""
-
-#: gSpeech.py:188
-msgid "I'm reading the text. One moment please."
-msgstr ""
-
-#: gSpeech.py:190
-msgid "Multimedia window"
-msgstr ""
-
-#: gSpeech.py:239
+#: gSpeech.py:29
 msgid "A little script to read SVOX Pico texts selected with the mouse."
 msgstr ""
 
-#: gSpeech.py:259
+#: gSpeech.py:33
+msgid "Developers :"
+msgstr ""
+
+#: gSpeech.py:103
+msgid "SVOX Pico simple GUI"
+msgstr ""
+
+#: gSpeech.py:122 gSpeech.py:187
+msgid "Read clipboard content"
+msgstr ""
+
+#: gSpeech.py:129 gSpeech.py:193 gSpeech.py:350
+msgid "Read selected text"
+msgstr ""
+
+#: gSpeech.py:199
+msgid "Pause"
+msgstr ""
+
+#: gSpeech.py:206
+msgid "Stop"
+msgstr ""
+
+#: gSpeech.py:212
+msgid "Save"
+msgstr ""
+
+#: gSpeech.py:222
+msgid "Multimedia window"
+msgstr ""
+
+#: gSpeech.py:233
+msgid "Open dictionary"
+msgstr ""
+
+#: gSpeech.py:239
+msgid "Languages"
+msgstr ""
+
+#: gSpeech.py:265
+msgid "Refresh"
+msgstr ""
+
+#: gSpeech.py:271
+msgid "About"
+msgstr ""
+
+#: gSpeech.py:277
+msgid "Quit"
+msgstr ""
+
+#: gSpeech.py:357
+msgid "No text selected."
+msgstr ""
+
+#: gSpeech.py:363
+msgid "I'm reading the text. One moment please."
+msgstr ""
+
+#: gSpeech.py:492
+msgid "%s's Website"
+msgstr ""
+
+#: gSpeech.py:503
 msgid "Save the speech"
 msgstr ""
 
-#: gSpeech.py:267
+#: gSpeech.py:516
 msgid "Wave file (*.wav)"
 msgstr ""
