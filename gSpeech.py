@@ -119,14 +119,14 @@ class MainApp:
 
         button = Gtk.Button()
         button.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_EXECUTE,Gtk.IconSize.MENU))
-        button.set_label(_(u"Read clipboard content"))
+        button.set_label(_("Read clipboard content"))
         button.connect("clicked", self.onExecute)
         button.add_accelerator("clicked",self.accelgroup , ord('c'), Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_start(button, False, False,0)
 
         button = Gtk.Button()
         button.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_EXECUTE, Gtk.IconSize.MENU))
-        button.set_label(_(u"Read selected text"))
+        button.set_label(_("Read selected text"))
         button.connect("clicked", self.onExecute)
         button.add_accelerator("clicked",self.accelgroup , ord('x'),Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_start(button, False, False,0)
@@ -184,32 +184,32 @@ class MainApp:
         menu = Gtk.Menu()
 
         # Execute menu item : execute speeching from Desktop clipboard
-        rmItem = Gtk.MenuItem.new_with_label(_(u"Read clipboard content"))
+        rmItem = Gtk.MenuItem.new_with_label(_("Read clipboard content"))
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
 
         # Execute menu item : execute speeching from X.org clipboard
-        rmItem = Gtk.MenuItem.new_with_label(_(u"Read selected text"))
+        rmItem = Gtk.MenuItem.new_with_label(_("Read selected text"))
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
 
         # Play item menu
-        self.MenuPlayPause = Gtk.CheckMenuItem.new_with_label("Pause")
+        self.MenuPlayPause = Gtk.CheckMenuItem.new_with_label(_("Pause"))
         self.MenuPlayPause.set_active(False)
         self.MenuPlayPause.connect('toggled', self.onPlayPause)
         self.MenuPlayPause.show()
         menu.append(self.MenuPlayPause)
 
         # Stop  item menu
-        rmItem = Gtk.MenuItem.new_with_label("Stop")
+        rmItem = Gtk.MenuItem.new_with_label(_("Stop"))
         rmItem.connect('activate', self.onStop)
         rmItem.show()
         menu.append(rmItem)
 
         # Save item menu
-        rmItem = Gtk.MenuItem.new_with_label("Save")
+        rmItem = Gtk.MenuItem.new_with_label(_("Save"))
         rmItem.connect('activate', self.onSave)
         rmItem.show()
         menu.append(rmItem)
@@ -219,7 +219,7 @@ class MainApp:
         rmItem.show()
         menu.append(rmItem)
 
-        mediawin =  Gtk.MenuItem.new_with_label(_(u"Multimedia window"))
+        mediawin =  Gtk.MenuItem.new_with_label(_("Multimedia window"))
         mediawin.connect('activate', self.onMediaDialog)
         mediawin.show()
         menu.append(mediawin)
@@ -262,19 +262,19 @@ class MainApp:
         menu.append(rmItem)
 
         ## Reload item menu
-        item = Gtk.MenuItem.new_with_label("Refresh")
+        item = Gtk.MenuItem.new_with_label(_("Refresh"))
         item.connect('activate', self.onReload)
         item.show()
         menu.append(item)
 
         # About item menu : show About dialog
-        about = Gtk.MenuItem.new_with_label("About")
+        about = Gtk.MenuItem.new_with_label(_("About"))
         about.connect('activate', self.onAbout)
         about.show()
         menu.append(about)
 
         # Quit item menu
-        item = Gtk.MenuItem.new_with_label("Quit")
+        item = Gtk.MenuItem.new_with_label(_("Quit"))
         item.connect('activate', self.destroy)
         item.show()
         menu.append(item)
@@ -347,20 +347,20 @@ class MainApp:
 
     # on Execute item function : execute speech
     def onExecute(self, widget, data=None):
-        if widget.get_label() == _(u"Read selected text") :
+        if widget.get_label() == _("Read selected text") :
             text = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY).wait_for_text()
         else :
             text = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).wait_for_text()
 
         if text == None :
             try:
-                Notify.Notification.new(APPNAME, _(u"No text selected."), self.icon).show()
+                Notify.Notification.new(APPNAME, _("No text selected."), self.icon).show()
             except:
                 pass
 
         else :
             try:
-                Notify.Notification.new(APPNAME, _(u"I'm reading the text. One moment please."), self.icon).show()
+                Notify.Notification.new(APPNAME, _("I'm reading the text. One moment please."), self.icon).show()
             except:
                 pass
 
@@ -500,7 +500,7 @@ class AboutDialog:
 class SaveFile:
     """ the class to save the speech .wav file """
     def __init__(self):
-        dialog = Gtk.FileChooserDialog(_(u"Save the speech"),
+        dialog = Gtk.FileChooserDialog(_("Save the speech"),
                                        None,
                                        Gtk.FileChooserAction.SAVE,
                                        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
