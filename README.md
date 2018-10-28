@@ -18,7 +18,7 @@ In any directory, where you want to install
 
 1) Clone git repository
 
-git clone https://github.com/tuxmouraille/gSpeech.git
+git clone https://github.com/lusum/gSpeech.git
 
 2) Create .desktop launcher for gSpeech.sh
 
