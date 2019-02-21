@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Exec=./gSpeech.sh
+Icon=./icons/gSpeech.svg
+ServiceTypes=DBUS/Text-to-Speech
+X-DBUS-StartupType=Unique
+X-KDE-StartupNotify=false
+Name=gSpeech
+Comment=KDE Text To Speech Service
+GenericName=Text To Speech Service
+Categories=Qt;KDE;Utility;Accessibility;
+OnlyShowIn=KDE;
+
