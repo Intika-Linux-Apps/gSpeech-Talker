@@ -22,12 +22,12 @@ gettext.install(APPNAME, localdir)
 #########################
 # Application info
 ICON = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '.svg')
-VERSION = "0.7.0.0"
-AUTHORNAME = "Lahire Biette,Sardi Carlo"
-AUTHOREMAIL = "<tuxmouraille@gmail.com>,<lusumdev@zoho.eu>"
+VERSION = "0.8.0.0"
+AUTHORNAME = "Lahire Biette,Sardi Carlo,Intika"
+AUTHOREMAIL = "<tuxmouraille@gmail.com>,<lusumdev@zoho.eu>,<intika@librefox.org>"
 AUTHOR = AUTHORNAME + ' ' + AUTHOREMAIL
 COMMENT = _("A little script to read SVOX Pico texts selected with the mouse.")
-COPYRIGHT_YEAR = '2011,2014,2018'
+COPYRIGHT_YEAR = '2011,2014,2018,2019'
 COPYRIGHTS = u"Copyright © %s %s" % (COPYRIGHT_YEAR, AUTHORNAME)
 AUTHORS = [
     _(u"Developers :"),
@@ -40,7 +40,7 @@ TRANSLATORS = u"pt-PT, pt-BR, es-ES &amp; it-IT :\n\
 Dupouy Paul"
 
 #~ ARTISTS = []
-WEBSITE = 'https://github.com/tuxmouraille/gSpeech'
+WEBSITE = 'https://github.com/Intika-Linux-Apps/gSpeech'
 
 LICENSE = """Copyright © %s - %s.
 
@@ -61,6 +61,8 @@ along with %s.  If not, see <http://www.gnu.org/licenses/>.
 # Supported SVOX Pico's languages
 LISTLANG = ["de-DE", "en-GB", "en-US", "es-ES", "fr-FR", "it-IT"]
 
+# Supported SVOX Pico's languages
+SPEEDS = ["0.6", "0.8", "1.0", "1.2", "1.4", "1.6", "1.8", "2.0", "2.2"]
 
 # Temporaries files
 CACHEFOLDER = os.getenv('HOME') + '/.cache/' + APPNAME + '/'
@@ -85,6 +87,7 @@ class MainApp:
         Notify.init('gSpeech')
         # define speech language
         self.lang = DefaultLang
+        self.speed = DefaultSpeed
         # select related icon
         #~ self.icon = APPNAME + '-' + self.lang
         self.icon = ICON
@@ -118,45 +121,45 @@ class MainApp:
         self.accelgroup = Gtk.AccelGroup()
         # Add the accelerator group to the toplevel window
         self.window.add_accel_group(self.accelgroup)
-
+        
+        button = Gtk.Button()
+        button.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_EXECUTE, Gtk.IconSize.MENU))
+        button.set_label(_("Read Selected Text"))
+        button.set_property("width-request", 300)
+        button.connect("clicked", self.onExecute)
+        button.add_accelerator("clicked",self.accelgroup , ord('x'),Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
+        hbox.pack_start(button, False, False,0)
+        
+        self.window.vbox.pack_start(hbox, False, False,0)
+        
+        hbox = Gtk.HBox()
+        
         button = Gtk.Button()
         button.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_EXECUTE,Gtk.IconSize.MENU))
-        button.set_label(_("Read clipboard content"))
+        button.set_label(_("Read Clipboard Content"))
+        button.set_property("width-request", 300)
         button.connect("clicked", self.onExecute)
         button.add_accelerator("clicked",self.accelgroup , ord('c'), Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_start(button, False, False,0)
 
-        button = Gtk.Button()
-        button.set_image(Gtk.Image.new_from_stock(Gtk.STOCK_EXECUTE, Gtk.IconSize.MENU))
-        button.set_label(_("Read selected text"))
-        button.connect("clicked", self.onExecute)
-        button.add_accelerator("clicked",self.accelgroup , ord('x'),Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
-        hbox.pack_start(button, False, False,0)
-
         self.window.vbox.pack_start(hbox, False, False,0)
-
+        
         hbox = Gtk.HBox()
 
         self.WinPlayPause = Gtk.Button(stock = Gtk.STOCK_MEDIA_PAUSE)
         self.WinPlayPause.connect("clicked", self.onPlayPause)
+        self.WinPlayPause.set_property("width-request", 75)
         button.add_accelerator("clicked",self.accelgroup , ord('p'),Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_start(self.WinPlayPause, False, False,0)
 
         button = Gtk.Button(stock = Gtk.STOCK_MEDIA_STOP)
         button.connect("clicked", self.onStop)
+        button.set_property("width-request", 75)
         button.add_accelerator("clicked",self.accelgroup , ord('q'), Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_start(button, False, False,0)
-
-        button = Gtk.Button(stock = Gtk.STOCK_SAVE)
-        button.connect("clicked", self.onSave)
-        button.add_accelerator("clicked",self.accelgroup , ord('s'), Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
-        hbox.pack_end(button, False, False,0)
-
-        self.window.vbox.pack_start(hbox, False, False,0)
-
-        hbox = Gtk.HBox()
-
+        
         combobox = Gtk.ComboBoxText.new()
+        combobox.set_property("width-request", 75)
         hbox.pack_start(combobox, False, False,0)
         count = 0
         for i in LISTLANG:
@@ -166,13 +169,14 @@ class MainApp:
             count += 1
         combobox.connect('changed', self.changed_cb)
 
-        button = Gtk.Button(stock = Gtk.STOCK_CLOSE)
-        #~ button.connect_object("clicked", Gtk.Widget.destroy, self.window)
-        button.connect_object("clicked", Gtk.Widget.hide, self.window)
+        button = Gtk.Button(stock = Gtk.STOCK_SAVE)
+        button.connect("clicked", self.onSave)
+        button.set_property("width-request", 75)
+        button.add_accelerator("clicked",self.accelgroup , ord('s'), Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         hbox.pack_end(button, False, False,0)
 
         self.window.vbox.pack_start(hbox, False, False,0)
-
+        
     def changed_cb(self, combobox):
         model = combobox.get_model()
         index = combobox.get_active()
@@ -184,16 +188,31 @@ class MainApp:
     def onRightClick(self, icon=None, event_button=None, event_time=None):
         # create menu
         menu = Gtk.Menu()
+        
+        mediawin =  Gtk.MenuItem.new_with_label(_("Control Center Window"))
+        mediawin.connect('activate', self.onMediaDialog)
+        mediawin.show()
+        menu.append(mediawin)
+
+        # Separator
+        rmItem =  Gtk.SeparatorMenuItem()
+        rmItem.show()
+        menu.append(rmItem)
 
         # Execute menu item : execute speeching from Desktop clipboard
-        rmItem = Gtk.MenuItem.new_with_label(_("Read clipboard content"))
+        rmItem = Gtk.MenuItem.new_with_label(_("Read Clipboard Content"))
         rmItem.connect('activate', self.onExecute)
         rmItem.show()
         menu.append(rmItem)
 
         # Execute menu item : execute speeching from X.org clipboard
-        rmItem = Gtk.MenuItem.new_with_label(_("Read selected text"))
+        rmItem = Gtk.MenuItem.new_with_label(_("Read Selected Text"))
         rmItem.connect('activate', self.onExecute)
+        rmItem.show()
+        menu.append(rmItem)
+        
+        # Separator
+        rmItem =  Gtk.SeparatorMenuItem()
         rmItem.show()
         menu.append(rmItem)
 
@@ -220,23 +239,33 @@ class MainApp:
         rmItem =  Gtk.SeparatorMenuItem()
         rmItem.show()
         menu.append(rmItem)
-
-        mediawin =  Gtk.MenuItem.new_with_label(_("Multimedia window"))
-        mediawin.connect('activate', self.onMediaDialog)
-        mediawin.show()
-        menu.append(mediawin)
-
-        # Separator
-        rmItem =  Gtk.SeparatorMenuItem()
+        
+        # Preference item menu
+        rmItem = Gtk.MenuItem.new_with_label(_(u"Voice Speed"))
         rmItem.show()
-        menu.append(rmItem)
+        # Creating and linking langues submenu
+        menulngs = Gtk.Menu()
+        rmItem.set_submenu(menulngs)
 
-        # Open the dictionnary in default editor
-        rmItem = Gtk.MenuItem.new_with_label(_(u"Open dictionary"))
-        rmItem.connect('activate', self.onDictionnary)
-        rmItem.show()
-        menu.append(rmItem)
+        # Creating languages items in submenu
+        # one empty item to initiate radioitem group
+        smItem = Gtk.RadioMenuItem(None, None)
+        for i in SPEEDS:
+            # Creating new item
+            #smItem = Gtk.RadioMenuItem(smItem, i, True)
+            smItem = Gtk.RadioMenuItem.new_with_label_from_widget(smItem, i)
+            # ... adding item in submenu
+            menulngs.append(smItem)
+            # linking it with onLang fonction
+            smItem.connect("toggled", self.onSpeed, i)
+            # i is defaut language activating radio button
+            if i == self.speed :
+                smItem.set_active(True)
+            # show item
+            smItem.show()
 
+        menu.append(rmItem)
+        
         # Preference item menu
         rmItem = Gtk.MenuItem.new_with_label(_(u"Languages"))
         rmItem.show()
@@ -263,23 +292,28 @@ class MainApp:
 
         menu.append(rmItem)
 
-        ## Reload item menu
-        item = Gtk.MenuItem.new_with_label(_("Refresh"))
-        item.connect('activate', self.onReload)
-        item.show()
-        menu.append(item)
-
-        # About item menu : show About dialog
-        about = Gtk.MenuItem.new_with_label(_("About"))
-        about.connect('activate', self.onAbout)
-        about.show()
-        menu.append(about)
-
         # Preferences
         options = Gtk.MenuItem.new_with_label(_("Options"))
         options.connect('activate', self.onOptions)
         options.show()
         menu.append(options)
+        
+        # Separator
+        rmItem =  Gtk.SeparatorMenuItem()
+        rmItem.show()
+        menu.append(rmItem)
+        
+        ## Reload item menu
+        item = Gtk.MenuItem.new_with_label(_("Reload"))
+        item.connect('activate', self.onReload)
+        item.show()
+        menu.append(item)
+        
+        # About item menu : show About dialog
+        about = Gtk.MenuItem.new_with_label(_("About"))
+        about.connect('activate', self.onAbout)
+        about.show()
+        menu.append(about)
 
         # Quit item menu
         item = Gtk.MenuItem.new_with_label(_("Quit"))
@@ -295,16 +329,6 @@ class MainApp:
             menu.popup(None, None, None,self.tray, event_button, event_time)
 
 
-    ## open the dictionnary file
-    def onDictionnary(self, widget):
-        lngDict = CONFIGDIR + '/' + self.lang + '.dic'
-
-        if not os.path.exists(lngDict) :
-            open(lngDict, 'a').close()
-
-        os.system('xdg-open "%s"' % ( lngDict ))
-
-
     ## onReload item function: reload script
     def onReload(self, widget):
         myscript = os.path.abspath(sys.argv[0])
@@ -316,6 +340,9 @@ class MainApp:
         self.lang = lng
         #~ self.icon = APPNAME + '-' + self.lang
         self.icon = os.path.join(SCRIPT_DIR, 'icons', APPNAME + '-' + self.lang + '.svg')
+        
+        config.default_language = lng
+        config.update()    
 
         if IsAppIndicator == True :
             self.ind.set_icon(self.icon)
@@ -323,6 +350,12 @@ class MainApp:
         elif IsAppIndicator == False :
             self.tray.set_from_file(self.icon)
 
+    ## action on speed submenu items
+    def onSpeed(self, widget, speed):
+        self.speed = speed
+        config.default_speed = speed
+        config.update()    
+            
     # show about dialog
     def onAbout(self, widget):
         self.aboutdiag = AboutDialog()
@@ -396,7 +429,8 @@ class MainApp:
                     text = text.replace(bad, good)
 
             if len(text) <= 32768:
-                os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
+                os.system('nanotts --speed %s -m -v %s -o %s \"%s\" ' % ( self.speed, self.lang, SPEECH, text ))
+                #os.system('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, SPEECH, text ))
 
             elif os.path.isfile('/usr/bin/sox'):
                 discours = text.split('\n\n')
@@ -407,7 +441,8 @@ class MainApp:
                     text += paragraph
                     if idx == len(discours)-1 or len(text) + len(discours[idx+1]) >= 32767:
                         filename = CACHEFOLDER + 'speech' + str(idx) + '.wav'
-                        cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
+                        cmds.append('nanotts --speed %s -m -v %s -o %s \"%s\" ' % ( self.speed, self.lang, filename, text ))
+                        #cmds.append('pico2wave -l %s -w %s \"%s\" ' % ( self.lang, filename, text ))
                         names.append(filename)
                         text = ''
 
@@ -583,6 +618,7 @@ class Config:
     _path = ''
     use_appindicator = True
     default_language = ''
+    default_speed = ''
     section = 'CONFIGURATION'
     show_notification = True
 
@@ -608,6 +644,11 @@ class Config:
             self.section,
             'DEFAULTLANGUAGE',
             self.default_language
+        )
+        raw.set(
+            self.section,
+            'DEFAULTSPEED',
+            self.default_speed
         )
         raw.set(
             self.section,
@@ -647,20 +688,23 @@ if __name__ == "__main__":
     if not os.path.isdir(CONFIGDIR) :
         os.mkdir(CONFIGDIR, 0775)
 
-    CONFIGFILE = os.path.join(CONFIGDIR, 'gspeech.conf')
+    CONFIGFILE = os.path.join(CONFIGDIR, 'gSpeech.conf')
     if not os.path.isfile(CONFIGFILE) :
         raw = ConfigParser.RawConfigParser()
         raw.add_section('CONFIGURATION')
         raw.set('CONFIGURATION', 'USEAPPINDICATOR', 'True')
-        raw.set('CONFIGURATION', 'DEFAULTLANGUAGE', '')
+        raw.set('CONFIGURATION', 'DEFAULTSPEED', '1.0')
+        raw.set('CONFIGURATION', 'DEFAULTLANGUAGE', '')        
         #~ config.set('CONFIGURATION', 'SHOWMEDIADIALOG', 'False')
         with open(CONFIGFILE, 'wb') as configfile:
             raw.write(configfile)
 
     IsAppIndicator = bool(IniRead(CONFIGFILE, 'CONFIGURATION', 'USEAPPINDICATOR', 'True' ))
-
+    DefaultSpeed = str(IniRead(CONFIGFILE, 'CONFIGURATION', 'DEFAULTSPEED', '' ))
+    
     DefaultLang = str(IniRead(CONFIGFILE, 'CONFIGURATION', 'DEFAULTLANGUAGE', '' ))
     DefaultLang = DefaultLang[ : 2 ] + '-' + DefaultLang[ 3 : ][ : 2 ]
+    
     # if SVOX Pico not support this language, find os environment language
     if not DefaultLang in LISTLANG :
         DefaultLang = os.environ.get('LANG', 'en_US')[ : 2 ] + '-' + os.environ.get('LANG', 'en_US')[ 3 : ][ : 2 ]
@@ -674,10 +718,10 @@ if __name__ == "__main__":
     except :
         IsAppIndicator = False
 
-
     config = Config(CONFIGFILE)
     config.use_appindicator = IsAppIndicator
     config.default_language = DefaultLang
+    config.default_speed = DefaultSpeed
     gSpeech = MainApp(config)
     gSpeech.main()
 
