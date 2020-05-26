@@ -7,7 +7,7 @@ Capture:
 ========
 
 <p align="center">
-  <img width="650" src="https://raw.githubusercontent.com/Intika-Linux-Apps/gSpeech/master/files/captures/capture.png">
+  <img width="650" src="https://raw.githubusercontent.com/Intika-Linux-Apps/gSpeech-Talker/master/files/captures/capture.png">
 </p>
 
 Installation instruction:
