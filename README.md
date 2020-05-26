@@ -30,6 +30,6 @@ Optional dependency:
 - sox (sox is needed to speech text with more than 2^15 characters)
 
 Install:
-- Clone git repository `git clone https://github.com/lusum/gSpeech.git`
+- Clone git repository `git https://github.com/Intika-Linux-Apps/gSpeech-Talker.git`
 - Create .desktop launcher for gSpeech.sh
 
